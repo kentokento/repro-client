@@ -33,7 +33,7 @@ func Setup(token string) {
 }
 
 func SendUserProfile(body []byte) error {
-	req, err := http.NewRequest(http.MethodPut, updateUserProfileUrl, bytes.NewReader(body))
+	req, err := http.NewRequest(http.MethodPost, updateUserProfileUrl, bytes.NewReader(body))
 	if err != nil {
 		return err
 	}
