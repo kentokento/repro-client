@@ -16,7 +16,7 @@ import (
 )
 
 func init() {
-	repro.Setup("API-TOKEN")
+	repro.SetUp("API-TOKEN")
 }
 
 func main() {

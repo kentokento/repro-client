@@ -30,7 +30,7 @@ func (r *reproClient) SetToken(token string) {
 	r.token = token
 }
 
-func Setup(token string) {
+func SetUp(token string) {
 	repro.SetToken(token)
 }
 
