@@ -27,7 +27,7 @@ func main() {
 	userProfiles.AddString("課金経験の有無", "有り")
 	userProfiles.AddInt("生まれた年", 1989)
 	userProfiles.AddInt("生まれた月", 7)
-	userProfiles.AddDecimal("生まれた月", 7)
+	userProfiles.AddDecimal("アクティブ率", 60.345)
 	userProfiles.AddDatetime("登録日時", time.Now())
 
 	resp, err := userProfiles.Send()
