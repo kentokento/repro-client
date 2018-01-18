@@ -30,7 +30,7 @@ func main() {
 	userProfiles.AddDecimal("生まれた月", 7)
 	userProfiles.AddDatetime("登録日時", time.Now())
 
-	err := userProfiles.Send()
+	resp, err := userProfiles.Send()
 	if err != nil {
 		// an error has occurred
 	}

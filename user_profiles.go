@@ -76,14 +76,14 @@ func (r *UserProfiles) Validate() error {
 	return nil
 }
 
-func (r *UserProfiles) Send() error {
+func (r *UserProfiles) Send() (ReproResponse, error) {
 	if err := r.Validate(); err != nil {
-		return err
+		return nil, err
 	}
 
 	body, err := json.Marshal(r)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	return SendUserProfile(body)
