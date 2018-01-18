@@ -1,6 +1,7 @@
 package repro
 
 import (
+	"encoding/json"
 	"net/http"
 	"strconv"
 )
@@ -8,8 +9,8 @@ import (
 type ReproError struct {
 	Status string `json:"status"`
 	Errors struct {
-		Code     string   `json:"code"`
-		Messages []string `json:"messages"`
+		Code     json.Number `json:"code"`
+		Messages []string    `json:"messages"`
 	} `json:"error"`
 }
 

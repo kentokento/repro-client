@@ -12,8 +12,6 @@ const (
 	typeInt      = "int"
 	typeDecimal  = "decimal"
 	typeDatetime = "datetime"
-
-	datetimeFormat = "2006-01-02T15:04:05-0700"
 )
 
 type UserProfiles struct {
@@ -63,7 +61,7 @@ func (r *UserProfiles) AddDecimal(key string, val interface{}) {
 }
 
 func (r *UserProfiles) AddDatetime(key string, val time.Time) {
-	r.add(key, typeDatetime, val.Format(datetimeFormat))
+	r.add(key, typeDatetime, val.Format(time.RFC3339))
 }
 
 func (r *UserProfiles) Validate() error {

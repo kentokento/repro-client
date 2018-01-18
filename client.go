@@ -40,6 +40,7 @@ func SendUserProfile(body []byte) (ReproResponse, error) {
 		return nil, err
 	}
 
+	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add(tokenHeaderKey, repro.token)
 	resp, err := repro.Do(req)
 	defer resp.Body.Close()
