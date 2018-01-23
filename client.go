@@ -4,7 +4,6 @@ package repro
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -50,12 +49,8 @@ func SendUserProfile(body []byte) (ReproResponse, error) {
 		return rr, err
 	}
 	if !rr.IsOK() {
-		rbody, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return rr, err
-		}
 		output := ReproError{}
-		err = json.Unmarshal(rbody, &output)
+		err = json.NewDecoder(resp.Body).Decode(&output)
 		if err != nil {
 			return rr, err
 		}
