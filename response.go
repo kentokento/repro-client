@@ -6,6 +6,11 @@ import (
 	"strconv"
 )
 
+const (
+	errorCodeNotRegistered   = 1002 // ユーザーIDが登録されていません
+	errorCodeTooManyRequests = 429  // Too Many Requests
+)
+
 type ReproError struct {
 	Status string `json:"status"`
 	Errors struct {
@@ -43,6 +48,14 @@ func NewReproResponse(code int, header http.Header) *reproResponse {
 
 func (r *reproResponse) IsOK() bool {
 	return r.statusCode == http.StatusAccepted
+}
+
+func (r *reproResponse) IsNotRegistered() bool {
+	return r.statusCode == errorCodeNotRegistered
+}
+
+func (r *reproResponse) IsTooManyRequests() bool {
+	return r.statusCode == errorCodeTooManyRequests
 }
 
 func (r *reproResponse) StatusCode() int {
