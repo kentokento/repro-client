@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	errorCodeNotRegistered   = 1002 // ユーザーIDが登録されていません
-	errorCodeTooManyRequests = 429  // Too Many Requests
+	errorCodeMissingPayload = 1001 // ペイロードの形式に誤りがあります
+	errorCodeNotRegistered  = 1002 // ユーザーIDが登録されていません
+	errorCodeInvalidValue   = 1003 // ユーザープロフィールの key, type, value が適切に設定されていません
 )
 
 type ReproError struct {
@@ -24,6 +25,14 @@ func (r *ReproError) Error() string {
 		return ""
 	}
 	return r.Errors.Messages[0]
+}
+
+func (r *ReproError) Code() int {
+	code, err := r.Errors.Code.Int64()
+	if err != nil {
+		return 0
+	}
+	return int(code)
 }
 
 type reproResponse struct {
@@ -50,12 +59,12 @@ func (r *reproResponse) IsOK() bool {
 	return r.statusCode == http.StatusAccepted
 }
 
-func (r *reproResponse) IsNotRegistered() bool {
-	return r.statusCode == errorCodeNotRegistered
+func (r *reproResponse) IsBadRequest() bool {
+	return r.statusCode == http.StatusBadRequest
 }
 
 func (r *reproResponse) IsTooManyRequests() bool {
-	return r.statusCode == errorCodeTooManyRequests
+	return r.statusCode == http.StatusTooManyRequests
 }
 
 func (r *reproResponse) StatusCode() int {
@@ -96,6 +105,8 @@ func (r *reproResponse) RetryAfter() int64 {
 
 type ReproResponse interface {
 	IsOK() bool
+	IsBadRequest() bool
+	IsTooManyRequests() bool
 	StatusCode() int
 	Limit() int64
 	Remaining() int64
